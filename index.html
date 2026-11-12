@@ -98,18 +98,47 @@
 
   </main>
 
+  <!-- BACK / NEXT -->
+  <div class="pager">
+    <button class="btn btn-outline" id="backBtn">Back</button>
+    <span class="pager-count" id="pagerCount">1 / 4</span>
+    <button class="btn" id="nextBtn">Next</button>
+  </div>
+
   <script>
     // Switch views (page never scrolls)
+    var order = ['home', 'personal', 'achievements', 'family'];
+    var current = 0;
     var links = document.querySelectorAll('.nav-link');
     var views = document.querySelectorAll('.view');
+    var backBtn = document.getElementById('backBtn');
+    var nextBtn = document.getElementById('nextBtn');
+    var pagerCount = document.getElementById('pagerCount');
+
+    function showView(id) {
+      current = order.indexOf(id);
+      views.forEach(function (v) { v.classList.toggle('active', v.id === id); });
+      links.forEach(function (l) { l.classList.toggle('active', l.getAttribute('data-view') === id); });
+      backBtn.disabled = current === 0;
+      nextBtn.disabled = current === order.length - 1;
+      pagerCount.textContent = (current + 1) + ' / ' + order.length;
+    }
+
     document.querySelectorAll('[data-view]').forEach(function (el) {
       el.addEventListener('click', function (e) {
         e.preventDefault();
-        var id = el.getAttribute('data-view');
-        views.forEach(function (v) { v.classList.toggle('active', v.id === id); });
-        links.forEach(function (l) { l.classList.toggle('active', l.getAttribute('data-view') === id); });
+        showView(el.getAttribute('data-view'));
       });
     });
+
+    backBtn.addEventListener('click', function () {
+      if (current > 0) showView(order[current - 1]);
+    });
+    nextBtn.addEventListener('click', function () {
+      if (current < order.length - 1) showView(order[current + 1]);
+    });
+
+    showView('home');
 
     // Dark mode toggle
     var root = document.documentElement;
