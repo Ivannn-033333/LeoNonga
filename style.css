@@ -254,7 +254,7 @@ h2 {
 
 
 
-/* ===== BIG PHOTO (paste at the very bottom of style.css) ===== */
+/* ===== PHOTO CARD (paste at the very bottom of style.css, replacing the old photo.css code) ===== */
 
 /* keep the text in the left area */
 #home {
@@ -264,38 +264,46 @@ h2 {
   font-size: clamp(2rem, 4.2vw, 3.6rem);
 }
 
-/* photo fills the whole right side */
+/* photo sits in a rounded card on the right, centered vertically */
 .avatar {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 42%;
-  height: auto;
+  top: 50%;
+  right: 7%;
+  transform: translateY(-50%);
+  width: min(34vw, 480px);
+  height: min(64vh, 520px);
   margin: 0;
   border: none;
-  border-radius: 32px 0 0 0;
-  box-shadow: 0 0 0 1px var(--border);
+  border-radius: 16px;
   background: var(--card);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--border);
 }
 .avatar img {
-  width: 100%;
-  height: 112%;            /* slightly taller so the bottom label is cropped out */
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 108%;            /* slightly taller so the bottom label is cropped out */
   object-fit: cover;
   object-position: top center;
 }
 
-/* tablet and phone: photo on top, text below */
+/* tablet and phone: photo card on top, text below */
 @media (max-width: 900px) {
   #home {
     padding: 0 20px 24px;
   }
   .avatar {
     position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
     width: 100%;
+    max-width: 380px;
+    height: auto;
     flex: 1;
     min-height: 0;
     margin-bottom: 18px;
-    border-radius: 28px;
   }
 }
